@@ -224,7 +224,10 @@ def query_df(sql: str, params: Iterable[Any] | None = None) -> pd.DataFrame:
                 )
             df = items.merge(runs[["run_id", "shop_date", "title"]], on="run_id", how="left")
             cols = ["item_id", "run_id", "shop_date", "title", "item_name", "category", "qty", "unit", "unit_price", "picked", "line_total"]
-            return df[cols].sort_values(["shop_date", "created_at"], ascending=[False, True], kind="stable").reset_index(drop=True)
+            return (
+                df.sort_values(["shop_date", "created_at"], ascending=[False, True], kind="stable")[cols]
+                .reset_index(drop=True)
+            )
 
     raise NotImplementedError(f"This query is not supported by the Apps Script backend:\n{sql}")
 
