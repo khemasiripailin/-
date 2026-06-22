@@ -97,7 +97,7 @@ def _api(action: str, **payload: Any) -> Any:
     url, token = _api_config()
     body = {"token": token, "action": action, **payload}
     try:
-        res = requests.post(url, json=body, timeout=30)
+        res = requests.post(url, json=body, timeout=120)
         res.raise_for_status()
         data = res.json()
     except requests.exceptions.JSONDecodeError as exc:
